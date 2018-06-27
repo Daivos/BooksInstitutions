@@ -1,6 +1,7 @@
 package simplePage.record;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ public class Record implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long recordId;
-	private String recordName;
+	private Date recordDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference(value = "dishId")
@@ -49,12 +50,12 @@ public class Record implements Serializable {
 		this.recordId = recordId;
 	}
 
-	public String getRecordName() {
-		return recordName;
+	public Date getRecordDate() {
+		return recordDate;
 	}
 
-	public void setRecordName(String recordName) {
-		this.recordName = recordName;
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
 	}
 
 	public Dish getDish() {

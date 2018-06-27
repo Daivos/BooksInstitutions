@@ -1,8 +1,12 @@
 package simplePage.record;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +36,23 @@ public class RecordController {
 	public void createRecord(@RequestBody final Record record, @PathVariable(value = "dishId") Long dishId,
 			@PathVariable(value = "id") Long id) {
 		recordService.addNewRecord(record, dishId, id);
+	}
+
+	// get all
+	@GetMapping("/records")
+	private List<Record> getAllRecords() {
+		return recordService.getRecordsList();
+	}
+
+	// get one
+	@GetMapping("/singleRecord/{recordId}")
+	private Record getRecordById(@PathVariable Long recordId) {
+		return recordService.getOneRecordById(recordId);
+	}
+
+	@DeleteMapping("/deleteRecord/{recordId}")
+	private void deleteRecord(@PathVariable("recordId") Long recordId) {
+		recordService.deleteRecordFromDb(recordId);
 	}
 
 	public RecordService getRecordService() {
