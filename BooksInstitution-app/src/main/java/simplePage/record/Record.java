@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import simplePage.book.Book;
 
@@ -22,7 +21,7 @@ import simplePage.book.Book;
 @Table(name = "RECORD")
 @EqualsAndHashCode(exclude = { "book" })
 @PrimaryKeyJoinColumn(name = "recordId")
-@Data
+
 public class Record implements Serializable {
 	private static final long serialVersionUID = 416974951348630192L;
 	@Id
@@ -34,5 +33,33 @@ public class Record implements Serializable {
 	@JsonBackReference(value = "bookId")
 	@JoinColumn(name = "bookId")
 	private Book book;
+
+	public Long getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(Long recordId) {
+		this.recordId = recordId;
+	}
+
+	public String getRecordName() {
+		return recordName;
+	}
+
+	public void setRecordName(String recordName) {
+		this.recordName = recordName;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 }
