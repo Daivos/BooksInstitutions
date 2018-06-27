@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class BookInformation extends Component{
+class ClientInformation extends Component{
 
     constructor(props) {
         super(props);
@@ -13,7 +13,7 @@ class BookInformation extends Component{
     }
 
     render() {
-        if (!this.props.bookInfo){
+        if (!this.props.clientInfo){
             return null;
         }
 
@@ -24,12 +24,14 @@ class BookInformation extends Component{
                 onClick={this.props.closeAction}
             />);
 
-            var oneBook = (
-                <div id="bookInfo">
-                    <p> Book's name: {this.props.bookInfo.bookName}</p>
-                    <p> Author: {this.props.bookInfo.author}</p>
-                    <p> Page number: {this.props.bookInfo.pageNumber}</p>
-                    <p> Quantity: {this.props.bookInfo.quantity}</p>                   
+            var oneClient = (
+                <div id="clientInfo">
+                private String firstName;
+                    <p> Client's first name: {this.props.clientInfo.firstName}</p>
+                    <p> Client's last name: {this.props.clientInfo.lastName}</p>
+                    <p> Is client use alcohol: {this.props.clientInfo.useAlcohol}</p>
+                    <p> Is client have alergy for Nuts: {this.props.clientInfo.isNutsAlergy}</p>      
+                    <p> Is client have alergy for Milk: {this.props.clientInfo.isMilkAlergy}</p>             
                 </div>
             )
         
@@ -37,12 +39,12 @@ class BookInformation extends Component{
             <MuiThemeProvider>
                 <div>
                     <Dialog
-                        title="Book:"
+                        title="Client:"
                         actions={actions}
                         modal={true}
                         open={this.props.open}
                     >
-                        {oneBook}
+                        {oneClient}
                     </Dialog>
 
                 </div>
@@ -50,4 +52,4 @@ class BookInformation extends Component{
         );
     }
 
-}export default BookInformation;
+}export default ClientInformation;

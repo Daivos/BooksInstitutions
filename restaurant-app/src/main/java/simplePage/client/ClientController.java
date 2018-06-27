@@ -33,7 +33,7 @@ public class ClientController {
 		clientService.deleteClientById(id);
 	}
 
-	@PostMapping("/client/newClient")
+	@PostMapping("/newClient")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void registerClient(@RequestBody Client client) {
 		clientService.saveClient(client);

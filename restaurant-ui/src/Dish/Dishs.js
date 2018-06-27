@@ -16,7 +16,7 @@ import Edit from 'material-ui/svg-icons/image/edit';
 import Delete from 'material-ui/svg-icons/action/delete';
 import {blue500, red500, greenA200} from 'material-ui/styles/colors';
 import swal from 'sweetalert';
-import BookInformation from './BookInformation';
+import DishInformation from './DishInformation';
 
 const styles = {
     marginLeft: 0,
@@ -25,7 +25,7 @@ const styles = {
 }
 
     
-   class Books extends Component {
+   class Dishs extends Component {
        constructor (props){
            super (props);
            this.state={
@@ -38,34 +38,32 @@ const styles = {
             deselectOnClickaway: true,
             height: '300px',
 
-            books:[], 
-            bookId: '',
-            bookName: '',
-            author: '', 
-            pageNumber: '',
-            quantity: '',
+            dishs:[], 
+            dishId: '',
+            dishName: '',
+            isNuts: '', 
+            isMilk: '',
 
-            bookInfo:[],
-
+            dishInfo:[],            
            }
         }
 
-    //get all books//
+    //get all dishs//
     componentWillMount(){
-    axios.get("http://localhost:8081/api/books")
+    axios.get("http://localhost:8081/api/dishs")
     .then((response)=>{
-        this.setState({books: response.data});
+        this.setState({dishs: response.data});
     })
     .catch((error) =>{
         console.log(error);
     });
 }
 
-   //get book info
-   getInfo=(bookId)=>{
-    axios.get("http://localhost:8081/api/singleBook/"+bookId)
+   //get dish info
+   getInfo=(dishId)=>{
+    axios.get("http://localhost:8081/api/singleDish/"+dishId)
     .then((response)=>{
-        this.setState({bookInfo: response.data}); 
+        this.setState({dishInfo: response.data}); 
         this.setState({ showModal: !this.state.showModal });
     })
     .catch((error)=>{
@@ -73,8 +71,8 @@ const styles = {
     });  
 }
 
-//delete book
-deleteBook=(bookId, index)=>{
+//delete dish
+deleteDish=(dishId, index)=>{
     swal({
         text: "Are you sure you want to delete?",
         icon: "warning",
@@ -83,18 +81,18 @@ deleteBook=(bookId, index)=>{
     })
     .then((willDelete)=>{
         if(willDelete){ 
-            this.removeFromDatabase(bookId);
+            this.removeFromDatabase(dishId);
             this.removeFromTable(index); 
 
-            swal("Book has been deleted!", {
+            swal("Dish has been deleted!", {
                 icon: "success",
             });
         }
     });
 }
 
-removeFromDatabase=(bookId)=>{
-    axios.delete("http://localhost:8081/api/deleteBook/"+bookId)
+removeFromDatabase=(dishId)=>{
+    axios.delete("http://localhost:8081/api/deleteDish/"+dishId)
     .then((response)=>{
         console.log(response);
     })
@@ -105,7 +103,7 @@ removeFromDatabase=(bookId)=>{
 
 removeFromTable=(index)=>{        
     this.setState(state=>({
-        books: state.books.filter((singleBook, i)=>i!==index)
+        dishs: state.dishs.filter((singleDish, i)=>i!==index)
     }));
 }
 
@@ -114,32 +112,29 @@ removeFromTable=(index)=>{
 closeModal=()=>{
     this.setState({showModal: false})
 }
-
-
     render(){
-       var allBooks = this.state.books.map((singleBook, index) =>(
+       var allDishs = this.state.dishs.map((singleDish, index) =>(
             <TableRow key={index} >
-                <TableRowColumn>{singleBook.bookName} </TableRowColumn>
-                <TableRowColumn>{singleBook.author}</TableRowColumn>
-                <TableRowColumn>{singleBook.pageNumber}</TableRowColumn>
-                <TableRowColumn>{singleBook.quantity}</TableRowColumn>
+                <TableRowColumn>{singleDish.dishName} </TableRowColumn>
+                <TableRowColumn>{singleDish.isNuts}</TableRowColumn>
+                <TableRowColumn>{singleDish.isMilk}</TableRowColumn>
                 <TableRowColumn>
                 <IconButton aria-label="Info" 
-                onClick={()=>this.getInfo(singleBook.bookId)}>
+                onClick={()=>this.getInfo(singleDish.dishId)}>
                     <Info                         
                     color={blue500}
                     hoverColor={greenA200}/>
                 </IconButton>
                   
                      <IconButton containerElement=
-                        {<Link to={"/singleBook/"+singleBook.bookId} />}
+                        {<Link to={"/singleDish/"+singleDish.dishId} />}
                         linkButton={true}>
                         <Edit
                             color={blue500}
                             hoverColor={greenA200}/>
                      </IconButton>
                      <IconButton aria-label="Delete" 
-                    onClick={()=>this.deleteBook(singleBook.bookId, index)}>
+                    onClick={()=>this.deleteDish(singleDish.dishId, index)}>
                         <Delete                         
                         color={red500}
                         hoverColor={greenA200} />
@@ -152,7 +147,7 @@ closeModal=()=>{
    return (
     <MuiThemeProvider>
     <div>
-    <h2>Books</h2>
+    <h2>Dishs</h2>
     <Table
     height={this.state.height}
     style={styles}
@@ -166,10 +161,9 @@ closeModal=()=>{
          enableSelectAll={this.state.enableSelectAll}>
 
             <TableRow>
-                <TableHeaderColumn>Book Name</TableHeaderColumn>
-               <TableHeaderColumn> Author</TableHeaderColumn>
-               <TableHeaderColumn>Page Number</TableHeaderColumn>
-               <TableHeaderColumn>Qantity</TableHeaderColumn>
+                <TableHeaderColumn>Dish's name:</TableHeaderColumn>
+               <TableHeaderColumn> Dish contains nuts:</TableHeaderColumn>
+               <TableHeaderColumn>Dish contains milk:</TableHeaderColumn>             
                <TableHeaderColumn
                className="icons"
                         style={{
@@ -184,14 +178,14 @@ closeModal=()=>{
         displayRowCheckbox={this.state.showCheckboxes}
         deselectOnClickaway={this.state.deselectOnClickaway}
         showRowHover={this.state.showRowHover}>
-            {allBooks}>
+            {allDishs}>
         </TableBody>
     </Table>
-    <BookInformation
+    <DishInformation
                 open={this.state.showModal}
                 closeAction={this.closeModal}
-                bookInfo={this.state.bookInfo}             
-                bookId={this.state.bookId}/>
+                dishInfo={this.state.dishInfo}             
+                dishId={this.state.dishId}/>
           </div>
           </MuiThemeProvider>
    )
@@ -199,6 +193,6 @@ closeModal=()=>{
        
        
    };
-    export default Books; 
+    export default Dishs; 
 
         

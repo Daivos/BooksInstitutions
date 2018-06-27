@@ -50,9 +50,21 @@ class App extends Component {
                 <Col md="2">
                   <Drawer open={this.state.open} width={150}>
                     <AppBar showMenuIconButton={false}></AppBar>
-                    <MenuItem primaryText="Books"
-                              containerElement={<Link to="/books" />}
+                    <MenuItem primaryText="Clients"
+                              containerElement={<Link to="/clients" />}
                               /><br/>
+                    <MenuItem primaryText="New Client"
+                              containerElement={<Link to="/newClient" />}
+                              /><br/> 
+                    <MenuItem primaryText="Dishs"
+                              containerElement={<Link to="/dishs" />}
+                              /><br/>
+                    <MenuItem primaryText="Meniu records"
+                              containerElement={<Link to="/records" />}
+                              /><br/>
+                    <MenuItem primaryText="New record"
+                              containerElement={<Link to="/newRecords" />}
+                              /><br/>                              
                     <MenuItem primaryText="All Items"
                               containerElement={<Link to="/items" />}
                               /><br/>
@@ -62,9 +74,7 @@ class App extends Component {
                     <MenuItem primaryText="New Owner"
                               containerElement={<Link to="/newOwner" />}
                               /><br/>
-                    <MenuItem primaryText="New Storage"
-                              containerElement={<Link to="/newStorage" />}
-                              /><br/>       
+      
                   </Drawer>
                 </Col>
                 <Col md="10">
