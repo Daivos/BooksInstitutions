@@ -23,4 +23,20 @@ public class RecordService {
 		recordRepository.save(record);
 	}
 
+	public JpaRecordRepository getRecordRepository() {
+		return recordRepository;
+	}
+
+	public void setRecordRepository(JpaRecordRepository recordRepository) {
+		this.recordRepository = recordRepository;
+	}
+
+	public JpaBookRepository getBookRepository() {
+		return bookRepository;
+	}
+
+	public void setBookRepository(JpaBookRepository bookRepository) {
+		this.bookRepository = bookRepository;
+	}
+
 }

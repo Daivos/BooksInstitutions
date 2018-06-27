@@ -33,4 +33,12 @@ public class RecordController {
 		recordService.addNewRecord(record, bookId);
 	}
 
+	public RecordService getRecordService() {
+		return recordService;
+	}
+
+	public void setRecordService(RecordService recordService) {
+		this.recordService = recordService;
+	}
+
 }
