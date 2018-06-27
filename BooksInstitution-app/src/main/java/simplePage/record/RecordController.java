@@ -26,11 +26,12 @@ public class RecordController {
 		this.recordService = recordService;
 	}
 
-	// create new item
-	@RequestMapping(value = "/newRecord/{bookId}/", method = RequestMethod.POST)
+	// new
+	@RequestMapping(value = "/newRecord/{dishId}/{id}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createRecord(@RequestBody final Record record, @PathVariable(value = "bookId") Long bookId) {
-		recordService.addNewRecord(record, bookId);
+	public void createRecord(@RequestBody final Record record, @PathVariable(value = "dishId") Long dishId,
+			@PathVariable(value = "id") Long id) {
+		recordService.addNewRecord(record, dishId, id);
 	}
 
 	public RecordService getRecordService() {

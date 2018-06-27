@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import simplePage.book.Book;
-import simplePage.book.JpaBookRepository;
+import simplePage.client.Client;
+import simplePage.client.JpaClientRepository;
+import simplePage.dish.Dish;
+import simplePage.dish.JpaDishRepository;
 
 @Transactional
 @Service
@@ -14,12 +16,17 @@ public class RecordService {
 	@Autowired
 	private JpaRecordRepository recordRepository;
 	@Autowired
-	private JpaBookRepository bookRepository;
+	private JpaDishRepository dishRepository;
+	@Autowired
+	JpaClientRepository clientRepository;
 
-	public void addNewRecord(Record record, Long bookId) {
+	// new
+	public void addNewRecord(Record record, Long dishId, Long id) {
 		record.setRecordName(record.getRecordName());
-		Book book = bookRepository.findOne(bookId);
-		record.setBook(book);
+		Dish dish = dishRepository.findOne(dishId);
+		record.setDish(dish);
+		Client client = clientRepository.findOne(id);
+		record.setClient(client);
 		recordRepository.save(record);
 	}
 
@@ -31,12 +38,12 @@ public class RecordService {
 		this.recordRepository = recordRepository;
 	}
 
-	public JpaBookRepository getBookRepository() {
-		return bookRepository;
+	public JpaDishRepository getDishRepository() {
+		return dishRepository;
 	}
 
-	public void setBookRepository(JpaBookRepository bookRepository) {
-		this.bookRepository = bookRepository;
+	public void setDishRepository(JpaDishRepository dishRepository) {
+		this.dishRepository = dishRepository;
 	}
 
 }

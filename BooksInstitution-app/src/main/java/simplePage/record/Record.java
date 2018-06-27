@@ -15,11 +15,12 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.EqualsAndHashCode;
-import simplePage.book.Book;
+import simplePage.client.Client;
+import simplePage.dish.Dish;
 
 @Entity
 @Table(name = "RECORD")
-@EqualsAndHashCode(exclude = { "book" })
+@EqualsAndHashCode(exclude = { "dish" })
 @PrimaryKeyJoinColumn(name = "recordId")
 
 public class Record implements Serializable {
@@ -30,9 +31,15 @@ public class Record implements Serializable {
 	private String recordName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference(value = "bookId")
-	@JoinColumn(name = "bookId")
-	private Book book;
+	@JsonBackReference(value = "dishId")
+	@JoinColumn(name = "dishId")
+	private Dish dish;
+
+	// new
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference(value = "id")
+	@JoinColumn(name = "id")
+	private Client client;
 
 	public Long getRecordId() {
 		return recordId;
@@ -50,16 +57,24 @@ public class Record implements Serializable {
 		this.recordName = recordName;
 	}
 
-	public Book getBook() {
-		return book;
+	public Dish getDish() {
+		return dish;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setDish(Dish dish) {
+		this.dish = dish;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 }

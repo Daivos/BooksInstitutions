@@ -1,14 +1,21 @@
 package simplePage.client;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.EqualsAndHashCode;
+import simplePage.record.Record;
 
 /**
  * @author ggrazevicius
@@ -16,7 +23,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "CLIENT")
 @EqualsAndHashCode(exclude = { "records" })
-@PrimaryKeyJoinColumn(name = "clientId")
+@PrimaryKeyJoinColumn(name = "id")
 
 // @NamedQueries({
 // @NamedQuery(name = "findAllClients", query = "select client from Client
@@ -31,6 +38,17 @@ public class Client implements Serializable {
 	private String firstName;
 
 	private String lastName;
+
+	private boolean useAlcohol;
+
+	private boolean isNutsAlergy;
+
+	private boolean isMilkAlergy;
+
+	// new
+	@JsonIgnore
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<Record> records = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -54,6 +72,34 @@ public class Client implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public boolean isUseAlcohol() {
+		return useAlcohol;
+	}
+
+	public void setUseAlcohol(boolean useAlcohol) {
+		this.useAlcohol = useAlcohol;
+	}
+
+	public boolean isNutsAlergy() {
+		return isNutsAlergy;
+	}
+
+	public void setNutsAlergy(boolean isNutsAlergy) {
+		this.isNutsAlergy = isNutsAlergy;
+	}
+
+	public boolean isMilkAlergy() {
+		return isMilkAlergy;
+	}
+
+	public void setMilkAlergy(boolean isMilkAlergy) {
+		this.isMilkAlergy = isMilkAlergy;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
